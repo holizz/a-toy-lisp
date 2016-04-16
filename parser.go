@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func parse(tokens []*Token) (Node, error) {
+func parser(tokens []*Token) (Node, error) {
 	current := 0
 
 	walk := func() (Node, error) { return Node{}, fmt.Errorf("ugh") }

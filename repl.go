@@ -28,7 +28,7 @@ func main() {
 			log.Fatal(err)
 		}
 
-		ast, err := parse(tokens)
+		ast, err := parser(tokens)
 		if err != nil {
 			log.Fatal(err)
 		}

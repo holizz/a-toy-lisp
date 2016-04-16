@@ -7,13 +7,13 @@ import (
 )
 
 func TestParseBlank(t *testing.T) {
-	ast, err := parse([]*Token{})
+	ast, err := parser([]*Token{})
 	assert.Nil(t, err)
 	assert.Equal(t, Node{Type: NodeTypeProgram, Body: []Node{}}, ast)
 }
 
 func TestParseNumber(t *testing.T) {
-	ast, err := parse([]*Token{
+	ast, err := parser([]*Token{
 		{
 			Type:  TokenTypeInteger,
 			Value: "14",
@@ -29,7 +29,7 @@ func TestParseNumber(t *testing.T) {
 }
 
 func TestParseSingleCallNoArguments(t *testing.T) {
-	ast, err := parse([]*Token{
+	ast, err := parser([]*Token{
 		{
 			Type:  TokenTypeParen,
 			Value: "(",
@@ -54,7 +54,7 @@ func TestParseSingleCallNoArguments(t *testing.T) {
 }
 
 func TestParseSingleCallWithArguments(t *testing.T) {
-	ast, err := parse([]*Token{
+	ast, err := parser([]*Token{
 		{
 			Type:  TokenTypeParen,
 			Value: "(",
@@ -96,7 +96,7 @@ func TestParseSingleCallWithArguments(t *testing.T) {
 }
 
 func TestParseCallRecursive(t *testing.T) {
-	ast, err := parse([]*Token{
+	ast, err := parser([]*Token{
 		{
 			Type:  TokenTypeParen,
 			Value: "(",

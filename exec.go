@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 func exec(ast Node, functions map[string]func(...LispValue) LispValue) (LispValue, error) {
 	evaluate := func(node Node) (LispValue, error) {
@@ -56,3 +59,20 @@ const (
 	LispValueTypeNumber LispValueType = iota
 	LispValueTypeNil
 )
+
+var DefaultFunctions = map[string]func(...LispValue) LispValue{
+	"add": func(values ...LispValue) LispValue {
+		output := LispValue{
+			Type:     LispValueTypeNumber,
+			IntValue: 0,
+		}
+		for _, value := range values {
+			if value.Type != LispValueTypeNumber {
+				log.Fatal("oh noes")
+			}
+
+			output.IntValue += value.IntValue
+		}
+		return output
+	},
+}

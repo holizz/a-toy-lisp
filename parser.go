@@ -1,11 +1,11 @@
-package main
+package lisp
 
 import (
 	"fmt"
 	"strconv"
 )
 
-func parser(tokens []*Token) (Node, error) {
+func Parser(tokens []*Token) (Node, error) {
 	current := 0
 
 	walk := func() (Node, error) { return Node{}, fmt.Errorf("ugh") }

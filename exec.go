@@ -1,11 +1,11 @@
-package main
+package lisp
 
 import (
 	"fmt"
 	"log"
 )
 
-func exec(ast Node, functions map[string]func(...LispValue) LispValue) (LispValue, error) {
+func Exec(ast Node, functions map[string]func(...LispValue) LispValue) (LispValue, error) {
 	evaluate := func(node Node) (LispValue, error) {
 		return LispValue{}, fmt.Errorf("aaaa")
 	}

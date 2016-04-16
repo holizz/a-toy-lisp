@@ -1,4 +1,4 @@
-package main
+package lisp
 
 import (
 	"testing"
@@ -18,13 +18,13 @@ func compareTokens(t *testing.T, expected []Token, actual []*Token) {
 }
 
 func TestTokenizerBlank(t *testing.T) {
-	tokens, err := tokenizer("")
+	tokens, err := Tokenizer("")
 	assert.Nil(t, err)
 	compareTokens(t, []Token{}, tokens)
 }
 
 func TestTokenizerParens(t *testing.T) {
-	tokens, err := tokenizer("()")
+	tokens, err := Tokenizer("()")
 	assert.Nil(t, err)
 	compareTokens(t, []Token{
 		{
@@ -39,7 +39,7 @@ func TestTokenizerParens(t *testing.T) {
 }
 
 func TestTokenizerName(t *testing.T) {
-	tokens, err := tokenizer("(abc def)")
+	tokens, err := Tokenizer("(abc def)")
 	assert.Nil(t, err)
 	compareTokens(t, []Token{
 		{
@@ -62,7 +62,7 @@ func TestTokenizerName(t *testing.T) {
 }
 
 func TestTokensUnicode(t *testing.T) {
-	tokens, err := tokenizer("\U0001F407")
+	tokens, err := Tokenizer("\U0001F407")
 	assert.Nil(t, err)
 	compareTokens(t, []Token{
 		{
@@ -73,7 +73,7 @@ func TestTokensUnicode(t *testing.T) {
 }
 
 func TestTokensInteger(t *testing.T) {
-	tokens, err := tokenizer("123 456")
+	tokens, err := Tokenizer("123 456")
 	assert.Nil(t, err)
 	compareTokens(t, []Token{
 		{

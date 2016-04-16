@@ -1,4 +1,4 @@
-package main
+package lisp
 
 import (
 	"testing"
@@ -9,7 +9,7 @@ import (
 func TestExecEmptyBody(t *testing.T) {
 	ast := Node{Type: NodeTypeProgram, Body: []Node{}}
 
-	output, err := exec(ast, DefaultFunctions)
+	output, err := Exec(ast, DefaultFunctions)
 	assert.Nil(t, err)
 	assert.Equal(t, LispValueTypeNil, output.Type)
 }
@@ -22,7 +22,7 @@ func TestExecNumber(t *testing.T) {
 		},
 	}}
 
-	output, err := exec(ast, DefaultFunctions)
+	output, err := Exec(ast, DefaultFunctions)
 	assert.Nil(t, err)
 	assert.Equal(t, LispValueTypeNumber, output.Type)
 	assert.Equal(t, int64(1), output.IntValue)
@@ -46,7 +46,7 @@ func TestExecSingleCall(t *testing.T) {
 		},
 	}}
 
-	output, err := exec(ast, DefaultFunctions)
+	output, err := Exec(ast, DefaultFunctions)
 	assert.Nil(t, err)
 	assert.Equal(t, LispValueTypeNumber, output.Type)
 	assert.Equal(t, int64(3), output.IntValue)
@@ -82,7 +82,7 @@ func TestExecSingleCallWithManyValues(t *testing.T) {
 		},
 	}}
 
-	output, err := exec(ast, DefaultFunctions)
+	output, err := Exec(ast, DefaultFunctions)
 	assert.Nil(t, err)
 	assert.Equal(t, LispValueTypeNumber, output.Type)
 	assert.Equal(t, int64(15), output.IntValue)

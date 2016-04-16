@@ -6,6 +6,8 @@ import (
 	"log"
 
 	"gopkg.in/readline.v1"
+
+	"github.com/holizz/a-toy-lisp"
 )
 
 func main() {
@@ -23,17 +25,17 @@ func main() {
 			log.Fatal(err)
 		}
 
-		tokens, err := tokenizer(line)
+		tokens, err := lisp.Tokenizer(line)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		ast, err := parser(tokens)
+		ast, err := lisp.Parser(tokens)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		output, err := exec(ast, DefaultFunctions)
+		output, err := lisp.Exec(ast, lisp.DefaultFunctions)
 		if err != nil {
 			log.Fatal(err)
 		}

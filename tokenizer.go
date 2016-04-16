@@ -1,8 +1,8 @@
-package main
+package lisp
 
 import "regexp"
 
-func tokenizer(program string) ([]*Token, error) {
+func Tokenizer(program string) ([]*Token, error) {
 	tokens := []*Token{}
 
 	for _, _char := range program {

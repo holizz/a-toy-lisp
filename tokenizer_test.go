@@ -28,11 +28,11 @@ func TestTokenizerParens(t *testing.T) {
 	assert.Nil(t, err)
 	compareTokens(t, []Token{
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: "(",
 		},
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: ")",
 		},
 	}, tokens)
@@ -43,19 +43,19 @@ func TestTokenizerName(t *testing.T) {
 	assert.Nil(t, err)
 	compareTokens(t, []Token{
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: "(",
 		},
 		{
-			Type:  "name",
+			Type:  TokenTypeName,
 			Value: "abc",
 		},
 		{
-			Type:  "name",
+			Type:  TokenTypeName,
 			Value: "def",
 		},
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: ")",
 		},
 	}, tokens)
@@ -66,7 +66,7 @@ func TestTokensUnicode(t *testing.T) {
 	assert.Nil(t, err)
 	compareTokens(t, []Token{
 		{
-			Type:  "name",
+			Type:  TokenTypeName,
 			Value: "\U0001F407",
 		},
 	}, tokens)
@@ -77,11 +77,11 @@ func TestTokensInteger(t *testing.T) {
 	assert.Nil(t, err)
 	compareTokens(t, []Token{
 		{
-			Type:  "integer",
+			Type:  TokenTypeInteger,
 			Value: "123",
 		},
 		{
-			Type:  "integer",
+			Type:  TokenTypeInteger,
 			Value: "456",
 		},
 	}, tokens)

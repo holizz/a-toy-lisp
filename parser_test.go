@@ -9,20 +9,20 @@ import (
 func TestParseBlank(t *testing.T) {
 	ast, err := parse([]*Token{})
 	assert.Nil(t, err)
-	assert.Equal(t, Node{Type: "program", Body: []Node{}}, ast)
+	assert.Equal(t, Node{Type: NodeTypeProgram, Body: []Node{}}, ast)
 }
 
 func TestParseNumber(t *testing.T) {
 	ast, err := parse([]*Token{
 		{
-			Type:  "integer",
+			Type:  TokenTypeInteger,
 			Value: "14",
 		},
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, Node{Type: "program", Body: []Node{
+	assert.Equal(t, Node{Type: NodeTypeProgram, Body: []Node{
 		{
-			Type:     "number",
+			Type:     NodeTypeNumber,
 			IntValue: 14,
 		},
 	}}, ast)
@@ -31,22 +31,22 @@ func TestParseNumber(t *testing.T) {
 func TestParseSingleCallNoArguments(t *testing.T) {
 	ast, err := parse([]*Token{
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: "(",
 		},
 		{
-			Type:  "name",
+			Type:  TokenTypeName,
 			Value: "foo",
 		},
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: ")",
 		},
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, Node{Type: "program", Body: []Node{
+	assert.Equal(t, Node{Type: NodeTypeProgram, Body: []Node{
 		{
-			Type:      "call",
+			Type:      NodeTypeCall,
 			Name:      "foo",
 			Arguments: []Node{},
 		},
@@ -56,38 +56,38 @@ func TestParseSingleCallNoArguments(t *testing.T) {
 func TestParseSingleCallWithArguments(t *testing.T) {
 	ast, err := parse([]*Token{
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: "(",
 		},
 		{
-			Type:  "name",
+			Type:  TokenTypeName,
 			Value: "foo",
 		},
 		{
-			Type:  "integer",
+			Type:  TokenTypeInteger,
 			Value: "123",
 		},
 		{
-			Type:  "integer",
+			Type:  TokenTypeInteger,
 			Value: "456",
 		},
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: ")",
 		},
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, Node{Type: "program", Body: []Node{
+	assert.Equal(t, Node{Type: NodeTypeProgram, Body: []Node{
 		{
-			Type: "call",
+			Type: NodeTypeCall,
 			Name: "foo",
 			Arguments: []Node{
 				{
-					Type:     "number",
+					Type:     NodeTypeNumber,
 					IntValue: 123,
 				},
 				{
-					Type:     "number",
+					Type:     NodeTypeNumber,
 					IntValue: 456,
 				},
 			},
@@ -98,38 +98,38 @@ func TestParseSingleCallWithArguments(t *testing.T) {
 func TestParseCallRecursive(t *testing.T) {
 	ast, err := parse([]*Token{
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: "(",
 		},
 		{
-			Type:  "name",
+			Type:  TokenTypeName,
 			Value: "foo",
 		},
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: "(",
 		},
 		{
-			Type:  "name",
+			Type:  TokenTypeName,
 			Value: "bar",
 		},
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: ")",
 		},
 		{
-			Type:  "paren",
+			Type:  TokenTypeParen,
 			Value: ")",
 		},
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, Node{Type: "program", Body: []Node{
+	assert.Equal(t, Node{Type: NodeTypeProgram, Body: []Node{
 		{
-			Type: "call",
+			Type: NodeTypeCall,
 			Name: "foo",
 			Arguments: []Node{
 				{
-					Type:      "call",
+					Type:      NodeTypeCall,
 					Name:      "bar",
 					Arguments: []Node{},
 				},

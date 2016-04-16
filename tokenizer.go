@@ -15,27 +15,27 @@ func tokenizer(program string) ([]*Token, error) {
 		switch {
 		case char == "(" || char == ")":
 			tokens = append(tokens, &Token{
-				Type:  "paren",
+				Type:  TokenTypeParen,
 				Value: char,
 			})
 		case char == " ":
 			previous.Finished = true
 		case regexp.MustCompile("[0-9]").MatchString(char):
-			if previous.Type == "integer" && previous.Finished == false {
+			if previous.Type == TokenTypeInteger && previous.Finished == false {
 				previous.Value += char
 			} else {
 				tokens = append(tokens, &Token{
-					Type:  "integer",
+					Type:  TokenTypeInteger,
 					Value: char,
 				})
 			}
 		default:
 			// Treat everything as a name unless otherwise specified
-			if previous.Type == "name" && previous.Finished == false {
+			if previous.Type == TokenTypeName && previous.Finished == false {
 				previous.Value += char
 			} else {
 				tokens = append(tokens, &Token{
-					Type:  "name",
+					Type:  TokenTypeName,
 					Value: string(char),
 				})
 			}
@@ -46,7 +46,15 @@ func tokenizer(program string) ([]*Token, error) {
 }
 
 type Token struct {
-	Type     string
+	Type     TokenType
 	Value    string
 	Finished bool
 }
+
+type TokenType int
+
+const (
+	TokenTypeParen TokenType = iota
+	TokenTypeInteger
+	TokenTypeName
+)

@@ -13,7 +13,7 @@ func parse(tokens []*Token) (Node, error) {
 	walk = func() (Node, error) {
 
 		switch {
-		case tokens[current].Type == "integer":
+		case tokens[current].Type == TokenTypeInteger:
 			value, err := strconv.Atoi(tokens[current].Value)
 			if err != nil {
 				return Node{}, err
@@ -22,10 +22,10 @@ func parse(tokens []*Token) (Node, error) {
 			current++
 
 			return Node{
-				Type:     "number",
+				Type:     NodeTypeNumber,
 				IntValue: int64(value),
 			}, nil
-		case tokens[current].Type == "paren" && tokens[current].Value == "(":
+		case tokens[current].Type == TokenTypeParen && tokens[current].Value == "(":
 			// Skip opening paren
 			current++
 
@@ -36,7 +36,7 @@ func parse(tokens []*Token) (Node, error) {
 			// Get arguments
 			arguments := []Node{}
 
-			for tokens[current].Type != "paren" || tokens[current].Value != ")" {
+			for tokens[current].Type != TokenTypeParen || tokens[current].Value != ")" {
 				node, err := walk()
 				if err != nil {
 					return Node{}, err
@@ -48,7 +48,7 @@ func parse(tokens []*Token) (Node, error) {
 			current++
 
 			return Node{
-				Type:      "call",
+				Type:      NodeTypeCall,
 				Name:      name,
 				Arguments: arguments,
 			}, nil
@@ -58,7 +58,7 @@ func parse(tokens []*Token) (Node, error) {
 	}
 
 	ast := Node{
-		Type: "program",
+		Type: NodeTypeProgram,
 		Body: []Node{},
 	}
 
@@ -75,9 +75,17 @@ func parse(tokens []*Token) (Node, error) {
 }
 
 type Node struct {
-	Type      string
+	Type      NodeType
 	Body      []Node
 	Name      string
 	Arguments []Node
 	IntValue  int64
 }
+
+type NodeType int
+
+const (
+	NodeTypeProgram NodeType = iota
+	NodeTypeNumber
+	NodeTypeCall
+)

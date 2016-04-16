@@ -26,7 +26,7 @@ func exec(ast Node, functions map[string]func(...LispValue) LispValue) (LispValu
 				values = append(values, value)
 			}
 
-			value := functions[node.Name](values[0], values[1])
+			value := functions[node.Name](values...)
 			return value, nil
 		default:
 			return LispValue{}, fmt.Errorf("halp")

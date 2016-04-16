@@ -51,3 +51,39 @@ func TestExecSingleCall(t *testing.T) {
 	assert.Equal(t, LispValueTypeNumber, output.Type)
 	assert.Equal(t, int64(3), output.IntValue)
 }
+
+func TestExecSingleCallWithManyValues(t *testing.T) {
+	ast := Node{Type: NodeTypeProgram, Body: []Node{
+		{
+			Type: NodeTypeCall,
+			Name: "add",
+			Arguments: []Node{
+				{
+					Type:     NodeTypeNumber,
+					IntValue: 1,
+				},
+				{
+					Type:     NodeTypeNumber,
+					IntValue: 2,
+				},
+				{
+					Type:     NodeTypeNumber,
+					IntValue: 3,
+				},
+				{
+					Type:     NodeTypeNumber,
+					IntValue: 4,
+				},
+				{
+					Type:     NodeTypeNumber,
+					IntValue: 5,
+				},
+			},
+		},
+	}}
+
+	output, err := exec(ast, DefaultFunctions)
+	assert.Nil(t, err)
+	assert.Equal(t, LispValueTypeNumber, output.Type)
+	assert.Equal(t, int64(15), output.IntValue)
+}
